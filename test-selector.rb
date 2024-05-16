@@ -19,5 +19,7 @@ fav_poke = prompt.multi_select("Of these pokemon, which is your favorite?", choi
 p fav_poke  #follow the instructions you dummy. Use "SPACEBAR" assigns to var as array
 p fav_poke[0]
 
-
+#  ASK FOR A SELECTION FROM AN ENUMERATED LIST
+asks = ["Red/Blue", "Gold/Silver", "Ruby/Saphire", "Diamond/Pearl"]
+prompt.enum_select("Which generation is your favorite?")
 
