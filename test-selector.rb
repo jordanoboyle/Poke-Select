@@ -21,5 +21,19 @@ p fav_poke[0]
 
 #  ASK FOR A SELECTION FROM AN ENUMERATED LIST
 asks = ["Red/Blue", "Gold/Silver", "Ruby/Saphire", "Diamond/Pearl"]
-prompt.enum_select("Which generation is your favorite?")
+user_fav = prompt.enum_select("Which generation is your favorite?", asks)
+p "Default's favorite generation of pokemon is #{}"
+
+#Let's try out haveing a lot of options.
+options = [
+  {key: "y", name: "overwrite file", value: :yes},
+  {key: "n", name: "do not overwrite", value: :no},
+  {key: "a", name: "overwrite this file and all later files", value: :all},
+  {key: "d", name: "show diff", value: :diff},
+  {key: "q", name: "quit, do not overwrite" , value: :quit},
+]
+prompt.expand("Overwrite this file?", options)
+
+# let's collect multiple inputs 
+
 

@@ -10,4 +10,3 @@ prompt = TTY::Prompt.new
 choices = %w(Eggmoves EvolutionChain MoveSet LevelEvolve ShinyColor HMLearnables Type Weaknesses Strengths)
 user_choice = prompt.multi_select("Select what you would like to know more about?", choices)
 p "DefaultName would like to know more about #{user_choice[0]}."
-
