@@ -14,26 +14,38 @@ first_choice = prompt.select("Whos that pokemon?", %w(Squirtle Charmander Bulbas
 p first_choice
 
 # ASK A MULTIPLE CHOICE QUESTION
-choices = %w(Pikachu Vaporeon Umbreon Cinderace)
-fav_poke = prompt.multi_select("Of these pokemon, which is your favorite?", choices)
-p fav_poke  #follow the instructions you dummy. Use "SPACEBAR" assigns to var as array
-p fav_poke[0]
+# choices = %w(Pikachu Vaporeon Umbreon Cinderace)
+# fav_poke = prompt.multi_select("Of these pokemon, which is your favorite?", choices)
+# p fav_poke  #follow the instructions you dummy. Use "SPACEBAR" assigns to var as array
+# p fav_poke[0]
 
 #  ASK FOR A SELECTION FROM AN ENUMERATED LIST
-asks = ["Red/Blue", "Gold/Silver", "Ruby/Saphire", "Diamond/Pearl"]
-user_fav = prompt.enum_select("Which generation is your favorite?", asks)
-p "Default's favorite generation of pokemon is #{}"
+# asks = ["Red/Blue", "Gold/Silver", "Ruby/Saphire", "Diamond/Pearl"]
+# user_fav = prompt.enum_select("Which generation is your favorite?", asks)
+# p "Default's favorite generation of pokemon is #{}"
 
 #Let's try out haveing a lot of options.
-options = [
-  {key: "y", name: "overwrite file", value: :yes},
-  {key: "n", name: "do not overwrite", value: :no},
-  {key: "a", name: "overwrite this file and all later files", value: :all},
-  {key: "d", name: "show diff", value: :diff},
-  {key: "q", name: "quit, do not overwrite" , value: :quit},
-]
-prompt.expand("Overwrite this file?", options)
+# options = [
+#   {key: "y", name: "overwrite file", value: :yes},
+#   {key: "n", name: "do not overwrite", value: :no},
+#   {key: "a", name: "overwrite this file and all later files", value: :all},
+#   {key: "d", name: "show diff", value: :diff},
+#   {key: "q", name: "quit, do not overwrite" , value: :quit},
+# ]
+# prompt.expand("Overwrite this file?", options)
 
-# let's collect multiple inputs 
+# let's collect multiple inputs (via method or potentially class and assign to object)
+
+results = prompt.collect do
+  key(:name).ask("Name?")
+
+  key(:age).ask("Age?", convert: :int)
+
+  key(:address) do
+    key(:street).ask("Street?", required: true)
+    key(:city).ask("City?")
+    key(:zip).ask("Zip?", validate: /\A\d{5}\Z/)  # pay attention to the int in brackets. Dictates length input
+  end
+end
 
 
