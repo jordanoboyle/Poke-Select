@@ -30,7 +30,22 @@ def random_ten
       random_ten.append(rand_num)
     end
   end
+  return random_ten
 end
 
+def poke_selector(rand_ten, poke_array)
+  selector = []
+  rand_ten.each do |n|
+    selector.append(poke_array[n])
+  end
+  # a = [] 
+  # selector.each_index do |index| 
+  #   a.append({(index + 1) => "#{selector[index]}"})
+  # end
+  prompt = TTY::Prompt.new
+  user_poke_choice = prompt.enum_select("Which pokemon of these ten would you like to know more about?", selector)
+  return "I choose you #{user_poke_choice}!!"
+end
+p poke_selector(random_ten(), fetch_pokemon())
 
 
