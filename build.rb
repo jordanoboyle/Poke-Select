@@ -98,7 +98,11 @@ def poke_data_show(pokemon_name)
   location_names = red_blue_encounters.map do |encounter| # GPT help
     encounter['location_area']['name'].capitalize
   end
-  p "#{pokemon_name}'s locations in the Red/Blue Kanto region are as follows: #{location_names.join(", ")}. More functionality to come."
+  if location_names.empty? == true
+    p "#{pokemon_name} is a species that cannot be caught in the wild in Red/Blue Kanto region. More functionality to come."
+  else
+    p "#{pokemon_name.capitalize}'s locations in the Red/Blue Kanto region are as follows: #{location_names.join(", ")}. More functionality to come."
+  end
 end
 
 poke_data_show(choose_pokemon())
