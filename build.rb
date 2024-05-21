@@ -40,7 +40,6 @@ def choose_pokemon
   return p poke_selector(random_ten(), fetch_pokemon())
 end
 
-choose_pokemon()
 
 class PokeAPI 
   include HTTParty # this line includes all methods from HTTParty in this class
@@ -50,16 +49,76 @@ class PokeAPI
   def get_pokemon_data(poke_name)
     response = self.class.get("/pokemon/#{poke_name}")
     poke_data = JSON.parse(response.body)
+    return poke_data
   end
 
-  def get_species_data(poke_name)
-    response = HTTParty.get(
-    base_url + "/pokemon-species/#{poke_name}/"
-    )
+  def get_species_data(species_url)
+    response = self.class.get(species_url)
     species_data = JSON.parse(response.body)
+    return species_data
   end
 
+  def get_encounter_data(encounter_url)
+    response = self.class.get(encounter_url)
+    JSON.pars(response.body)
+  end
 end
+
+def poke_data_show(pokemon_name)
+  # api = PokeAPI.new
+  # pokemon_data = api.get_pokemon_data(pokemon_name)
+  
+  #BELOW IS NOT SUPPOSED TO BE HERE
+  base_url = 'https://pokeapi.co/api/v2'
+  pokemon_data = HTTParty.get(
+  base_url + "/pokemon/#{pokemon_name}"
+  )
+  parsed_data = JSON.parse(pokemon_data.body)
+  encounters = HTTParty.get(
+  parsed_data["location_area_encounters"]
+  )
+
+  # DISPLAY ENCOUNTER DATA
+  # encounter_url = pokemon_data["location_area_encounters"]
+  # encounters = api.get_encounter_data(encounter_url)
+  red_blue_encounters = []
+  i = 0
+  while i < encounters.length  # should convert to .select loop
+    n = encounters[i]
+    i2 = 0
+    while i2 < n["version_details"].length
+      vd = n["version_details"][i2]
+      if ['red', 'blue'].include?(vd['version']['name']) == true
+        red_blue_encounters << n
+      end
+      i2 += 1
+    end
+    i += 1
+  end
+  location_names = red_blue_encounters.map do |encounter| # GPT help
+    encounter['location_area']['name'].capitalize
+  end
+  p "#{pokemon_name}'s locations in the Red/Blue Kanto region are as follows: #{location_names.join(", ")}. More functionality to come."
+end
+
+poke_data_show(choose_pokemon())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #goal: fetch a random selection of pokemon from kanto and create a selector with "'pokemon name', I choose you!"
 #create a random number generator for numbers 0-10
