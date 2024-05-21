@@ -1,9 +1,9 @@
 # just getting some access to free pokemon api
 # What version was the pokemon in?
-require "http"
+require "httparty"
 
 def which_version()
-  poke_list = (HTTP.get("https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0").parse)["results"].map {|species| species["name"]}
+  poke_list = (HTTParty.get("https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0").parse)["results"].map {|species| species["name"]}
   
   n = true
   while n == true
@@ -15,7 +15,7 @@ def which_version()
       p "Please try another pokemon" 
     end
   end
-  versions_appeared = (HTTP.get("https://pokeapi.co/api/v2/pokemon/#{pokemon}/").parse)["game_indices"].map {|element| element["version"]["name"]}
+  versions_appeared = (HTTParty.get("https://pokeapi.co/api/v2/pokemon/#{pokemon}/").parse)["game_indices"].map {|element| element["version"]["name"]}
   
   return "#{pokemon.capitalize} appeared in these in: #{versions_appeared.join(", ")}"
 end
